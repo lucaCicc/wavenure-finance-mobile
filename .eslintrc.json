@@ -1,0 +1,52 @@
+{
+    "extends": ["expo", "eslint:recommended", "prettier", "plugin:react-hooks/recommended"],
+    "plugins": ["prettier", "@tanstack/query", "react-native"],
+    "parserOptions": {
+        "ecmaFeatures": {
+            "jsx": true
+        }
+    },
+    "env": {
+        "react-native/react-native": true
+    },
+    "ignorePatterns": ["**/*.stories.tsx"],
+    "rules": {
+        "prettier/prettier": ["error"],
+        "@typescript-eslint/no-useless-constructor": "off",
+        "arrow-body-style": ["error", "as-needed"],
+        "no-restricted-imports": [
+            "error",
+            {
+                "patterns": ["../"]
+            }
+        ],
+        "import/order": [
+            "warn",
+            {
+                "groups": [["builtin", "external"], "internal", ["parent", "index", "sibling"]],
+                "newlines-between": "always",
+                "alphabetize": {
+                    "order": "asc"
+                }
+            }
+        ],
+        "padding-line-between-statements": [
+            "error",
+            {
+                "blankLine": "always",
+                "prev": "*",
+                "next": ["return"]
+            }
+        ],
+        "react/hook-use-state": "off",
+        "react/no-children-prop": "warn",
+        "react-hooks/rules-of-hooks": "error",
+        "react-hooks/exhaustive-deps": "warn",
+        "react-native/no-unused-styles": "warn",
+        "react-native/no-inline-styles": "warn",
+        "react-native/no-color-literals": "warn",
+        "react/display-name": "off",
+        "react-native/no-single-element-style-arrays": "error",
+        "no-unused-vars": "off"
+    }
+}

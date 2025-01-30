@@ -1,0 +1,14 @@
+node_modules
+build
+dist
+res
+coverage
+android
+ios
+assets
+!android/app/main/assets/translations
+yarn.lock
+app/utils/country-geojson.ts
+plop-templates
+package.json
+package-lock.json

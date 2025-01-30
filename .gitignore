@@ -1,0 +1,79 @@
+# Learn more https://docs.github.com/en/get-started/getting-started-with-git/ignoring-files
+
+# dependencies
+node_modules/
+
+# Expo
+.expo/
+dist/
+web-build/
+
+# Native
+*.orig.*
+*.jks
+*.p8
+*.p12
+*.key
+*.mobileprovision
+
+# Metro
+.metro-health-check*
+
+#Android
+/android/app/.cxx/
+/android/app/build
+/android/app/release/
+
+#Ios
+/ios/build
+/ios/Pods/
+
+# env files
+.env
+.env.development
+.env.staging
+.env.production
+.env.release_candidate
+
+# debug
+npm-debug.*
+yarn-debug.*
+yarn-error.*
+
+# fastlane
+fastlane/report.xml
+
+# macOS
+.DS_Store
+*.pem
+
+# local env files
+.env*.local
+
+# typescript
+*.tsbuildinfo
+
+# Editor directories and files
+.idea/
+
+# firebase
+**/google-services.json
+**/GoogleService-Info.plist
+
+
+#other
+npm-debug.*
+*.jks
+*.keystore
+*.p8
+*.p12
+*.key
+*.mobileprovision
+*.orig.*
+.scannerwork
+*.ipa
+*.dSYM*
+*.apk
+.eslintcache
+.artifacts/*
+vendor
