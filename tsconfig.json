@@ -43,7 +43,7 @@
         }
     },
     "include": [
-        "./typings/**/*",
+        "./types/**/*",
         "./src/**/*.ts",
         "./src/**/*.tsx",
         "./e2e/**/*.ts",

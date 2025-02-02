@@ -80,5 +80,6 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
             },
         ],
         ['expo-localization'],
+        ['expo-secure-store'],
     ],
 });

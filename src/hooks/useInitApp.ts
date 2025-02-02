@@ -13,6 +13,7 @@ import * as Font from 'expo-font';
 import { useEffect, useState } from 'react';
 
 import Logger from '@helper/logger';
+import { SyncStorageService } from '@services/SyncStorageService';
 
 /*
  * This hook is used to initialize the app
@@ -24,6 +25,8 @@ const useInitApp = () => {
     useEffect(() => {
         const init = async () => {
             try {
+                await SyncStorageService.initialize();
+
                 // Load Font
                 await Font.loadAsync({
                     Inter_900Black,
