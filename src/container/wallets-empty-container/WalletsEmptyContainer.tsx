@@ -1,32 +1,56 @@
+import { useNavigation } from '@react-navigation/native';
+import { useCallback } from 'react';
 import { StyleSheet, View } from 'react-native';
 
 import colors from '@common/colors';
 import Text from '@components/atoms/text';
 import ConfirmButton from '@components/molecules/buttons/button-confirm/ConfirmButton';
+import { MainStack } from '@navigation/types/index.types';
+import { CreateWalletNavProps, SharedScreen } from '@navigation/types/shared.types';
 
 /**
  *
  *
  */
-const WalletsEmptyContainer = () => (
-    <View style={styles.container}>
-        <View style={styles.wrapper}>
-            <Text variant="title" variantStyle="h3" style={styles.title}>
-                Il tuo portafoglio è vuoti
-            </Text>
-            <Text variant="text" variantStyle="introduction" style={styles.subTitle}>
-                Collega il tuo conto bancario o inizia a monitorare manualmente le tue spese
-            </Text>
-        </View>
+const WalletsEmptyContainer = () => {
+    const navigation = useNavigation() as CreateWalletNavProps['navigation'];
 
-        <View style={styles.ctaWrapper}>
-            <ConfirmButton onPress={() => null} title="Collega un conto bancario" disable={true} />
+    const navigateToCreteWallet = useCallback(() => {
+        navigation.navigate(MainStack.SHARED, {
+            screen: SharedScreen.CREATE_WALLET,
+        });
+    }, [navigation]);
+
+    /**
+     *
+     */
+    return (
+        <View style={styles.container}>
+            <View style={styles.wrapper}>
+                <Text variant="title" variantStyle="h3" style={styles.title}>
+                    Il tuo portafoglio è vuoti
+                </Text>
+                <Text variant="text" variantStyle="introduction" style={styles.subTitle}>
+                    Collega il tuo conto bancario o inizia a monitorare manualmente le tue spese
+                </Text>
+            </View>
+
+            <View style={styles.ctaWrapper}>
+                <ConfirmButton
+                    onPress={() => null}
+                    title="Collega un conto bancario"
+                    disable={true}
+                />
+            </View>
+            <View>
+                <ConfirmButton
+                    onPress={navigateToCreteWallet}
+                    title="Crea un portafoglio in contanti"
+                />
+            </View>
         </View>
-        <View>
-            <ConfirmButton onPress={() => null} title="Crea un portafoglio in contanti" />
-        </View>
-    </View>
-);
+    );
+};
 
 /**
  *

@@ -1,19 +1,17 @@
-import { Text } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import WalletsEmptyContainer from '@/container/wallets-empty-container/WalletsEmptyContainer';
-import { useGetWallets } from '@api/queries/wallet/useGetWallets';
+import { useGetWalletsQuery } from '@api/queries/wallet/useGetWalletsQuery';
 import colors from '@common/colors';
-import ConfirmButton from '@components/molecules/buttons/button-confirm/ConfirmButton';
 
 /**
  *
  *
  */
 const HomeScreen = () => {
-    const { data } = useGetWallets();
+    const { data } = useGetWalletsQuery();
 
-    console.log('data', data?.data.wallets.length);
+    console.log('data-ciao', data?.data);
 
     return (
         <SafeAreaView

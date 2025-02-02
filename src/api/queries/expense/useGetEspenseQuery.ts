@@ -5,37 +5,31 @@ import { API } from '@api/queryClient';
 import { useClient } from '@api/useClient';
 import { CACHE_TIMES_5_MINUTES } from '@config/http';
 import { HttpError } from '@model/error';
+import { WalletExpense } from '@model/wallet';
 import { getIsLogged } from '@store/modules/auth';
 
-const QUERY_KEY = () => ['client/address'];
+const QUERY_KEY = (walletId: number) => ['get/wallet-espense', walletId];
 
-type Wallets = {
-    id: number;
-    name: string;
-    initialBalance: number;
-    currency: string;
-    userId: number;
-};
-
-type WalletsResponse = {
+type ExpenseResponse = {
     message: string;
-    data: {
-        count: number;
-        wallets: Wallets[];
-    };
+    data: WalletExpense[];
 };
 
-const useGetWallets = () => {
+/**
+ *
+ *
+ */
+const useGetExpenseQuery = (walletId: number) => {
     const isLogged = useSelector(getIsLogged);
     const fetch = useClient({});
 
     const { data, isLoading, isError, isRefetching, isFetching } = useQuery<
-        WalletsResponse,
+        ExpenseResponse,
         HttpError
     >({
-        queryKey: QUERY_KEY(),
+        queryKey: QUERY_KEY(walletId),
         queryFn: () =>
-            fetch(`${API.WALLET_LIST}`).then(async (response) => {
+            fetch(`${API.WALLETS}/${walletId}/expenses`).then(async (response) => {
                 if (response.ok) {
                     return response.json();
                 }
@@ -50,4 +44,4 @@ const useGetWallets = () => {
     return { data, isLoading, isError, isRefetching, isFetching };
 };
 
-export { useGetWallets };
+export { useGetExpenseQuery, QUERY_KEY as GET_WALLETS_QUERY_KEY };

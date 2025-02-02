@@ -5,10 +5,10 @@ import { StyleSheet } from 'react-native';
 import colors from '@common/colors';
 import { BottomNavBar } from '@components/organisms/nav-bar';
 import { TabScreen, type TabBarStackParamList } from '@navigation/types/tab.types';
-import BudgetScreen from '@screens/budget/Budget';
-import HomeScreen from '@screens/home/Home';
+import BudgetScreen from '@screens/budget/BudgetScreen';
+import HomeScreen from '@screens/home/HomeScreen';
 import OthersScreen from '@screens/others/Others';
-import WalletsScreen from '@screens/wallets/Wallets';
+import WalletsScreen from '@screens/wallets/WalletsScreen';
 
 const Tab = createBottomTabNavigator<TabBarStackParamList>();
 

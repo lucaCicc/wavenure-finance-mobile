@@ -1,6 +1,8 @@
 import React from 'react';
 import { Pressable, Text, StyleSheet, ActivityIndicator } from 'react-native';
 
+import colors from '@common/colors';
+
 interface Props {
     onPress: () => void;
     title: string;
@@ -16,7 +18,11 @@ const ConfirmButton: React.FC<Props> = ({
 }) => (
     <Pressable
         disabled={disable}
-        style={({ pressed }) => [styles.button, pressed ? styles.buttonPressed : {}]}
+        style={({ pressed }) => [
+            styles.button,
+            pressed ? styles.buttonPressed : {},
+            disable ? { backgroundColor: colors.tide } : {},
+        ]}
         onPress={onPress}>
         {isLoading ? (
             <ActivityIndicator size="small" color="#00ff00" />

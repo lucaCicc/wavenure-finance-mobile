@@ -7,7 +7,7 @@ import { MainStackParamList } from '@navigation/types/index.types';
  * Screen names
  */
 export enum AuthScreen {
-    LOGIN = 'Login',
+    LOGIN = 'LoginScreen',
 }
 
 /**

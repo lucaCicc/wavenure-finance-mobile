@@ -9,7 +9,7 @@ import { HttpError } from '@model/error';
  *
  *
  */
-function useQueryLogin() {
+function useLoginQuery() {
     const fetch = useClient({ skipCheckToken: true });
 
     const { status, mutate, error, isError, isLoading } = useMutation<
@@ -32,4 +32,4 @@ function useQueryLogin() {
     return { login: mutate, error, isError, isQueryLoading: isLoading, status };
 }
 
-export default useQueryLogin;
+export default useLoginQuery;

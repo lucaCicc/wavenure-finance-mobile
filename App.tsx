@@ -11,6 +11,7 @@ import Main from './src/Main';
 import queryClient from './src/api/queryClient';
 import { commonStyle } from './src/common/styles';
 import Logger from './src/helpers/logger';
+import BottomSheetProvider from './src/providers/bottom-sheet';
 import rootPersistor from './src/store/rootPersistor';
 import rootStore from './src/store/rootStore';
 
@@ -44,7 +45,9 @@ export default function App() {
                         <SafeAreaInsetsContext.Consumer>
                             {(_) => (
                                 <GestureHandlerRootView style={commonStyle.flex}>
-                                    <Main onNavigationReadyCb={onNavigationReady} />
+                                    <BottomSheetProvider>
+                                        <Main onNavigationReadyCb={onNavigationReady} />
+                                    </BottomSheetProvider>
                                 </GestureHandlerRootView>
                             )}
                         </SafeAreaInsetsContext.Consumer>

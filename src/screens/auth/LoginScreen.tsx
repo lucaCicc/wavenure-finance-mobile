@@ -3,7 +3,7 @@ import { StyleSheet, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useDispatch } from 'react-redux';
 
-import useQueryLogin from '@api/queries/auth/useQueryLogin';
+import useLoginQuery from '@api/queries/auth/useLoginQuery';
 import colors from '@common/colors';
 import Text from '@components/atoms/text';
 import ConfirmButton from '@components/molecules/buttons/button-confirm/ConfirmButton';
@@ -18,7 +18,7 @@ import { setAccessToken } from '@store/modules/auth';
  */
 const LoginScreen = () => {
     const dispatch = useDispatch();
-    const { login, isQueryLoading } = useQueryLogin();
+    const { login, isQueryLoading } = useLoginQuery();
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');

@@ -8,7 +8,7 @@ import { TabBarStackParamList, TabScreen } from '@navigation/types/tab.types';
  * Screen names
  */
 export enum HomeScreen {
-    HOME = 'Home',
+    HOME = 'HomeScreen',
 }
 
 /**
