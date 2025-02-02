@@ -65,6 +65,7 @@ fastlane/report.xml
 npm-debug.*
 *.jks
 *.keystore
+!debug.keystore
 *.p8
 *.p12
 *.key

@@ -10,7 +10,7 @@
         "expo:doctor": "npx expo expo-doctor",
         "expo:fix": "npx expo install --fix",
         "expo:prebuild": "expo prebuild",
-        "prepare": "husky install",
+        "prepare": "husky",
         "postinstall": "patch-package",
         "lint": "eslint \"src/**/*.{js,jsx,ts,tsx}\" \"InitApp.tsx\" \"index.js\"",
         "lint:fix": "eslint --fix \"src/**/*.{js,jsx,ts,tsx}\" \"InitApp.tsx\" \"index.js\"",
