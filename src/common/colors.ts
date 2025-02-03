@@ -7,6 +7,7 @@ const colors = {
     emerald: '#56CA5A',
     emerald2: '#00B337',
     fringy: '#C6E8CC',
+    riper: '#00ff00',
     emeraldLite: '#14ae5c66',
     padua: '#AEEAB8',
     silverChalice: '#A5A5A5',

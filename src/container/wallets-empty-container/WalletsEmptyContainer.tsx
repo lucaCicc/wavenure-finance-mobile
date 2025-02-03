@@ -13,10 +13,12 @@ import { CreateWalletNavProps, SharedScreen } from '@navigation/types/shared.typ
  *
  */
 const WalletsEmptyContainer = () => {
-    const navigation = useNavigation() as unknown as CreateWalletNavProps['navigation'];
+    const navigation = useNavigation();
 
     const navigateToCreteWallet = useCallback(() => {
-        navigation.navigate(MainStack.SHARED, {
+        const _navigation = navigation as unknown as CreateWalletNavProps['navigation'];
+
+        _navigation.navigate(MainStack.SHARED, {
             screen: SharedScreen.CREATE_WALLET,
         });
     }, [navigation]);

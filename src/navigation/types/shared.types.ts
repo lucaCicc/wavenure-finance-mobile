@@ -18,9 +18,7 @@ export enum SharedScreen {
  * Stack Params
  */
 export type SharedStackParamList = {
-    [SharedScreen.CREATE_WALLET]: {
-        wallet: Wallet;
-    };
+    [SharedScreen.CREATE_WALLET]: undefined;
     [SharedScreen.UDPATE_EXPENSE]: {
         expense: WalletExpense;
     };

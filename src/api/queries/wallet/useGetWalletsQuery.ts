@@ -31,14 +31,20 @@ const useGetWalletsQuery = () => {
                 if (response.ok) {
                     return response.json();
                 }
-                throw new HttpError(await response.json());
+
+                return [];
             }),
         staleTime: 0,
         retry: 3,
         enabled: isLogged,
+        onError: (error) => {
+            // Qui puoi anche fare una gestione dell'errore, loggare ecc.
+            console.error('Error fetching wallets:', error);
+        },
+        initialData: () => undefined,
     });
 
-    return { data, isLoading, isError, isRefetching, isFetching };
+    return { data, isLoading: isRefetching || isFetching || isLoading, isError };
 };
 
 export { useGetWalletsQuery, QUERY_KEY as GET_WALLETS_QUERY_KEY };

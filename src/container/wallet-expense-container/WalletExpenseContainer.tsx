@@ -1,9 +1,12 @@
 import { useNavigation } from '@react-navigation/native';
 import React, { useCallback } from 'react';
-import { ListRenderItemInfo, View } from 'react-native';
+import { ListRenderItemInfo, StyleSheet, View } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
 
+import EspenseFilter from '@/container/espanse-filter/EspenseFilter';
+import { ExpenseFilter } from '@api/queries/expense/useGetEspenseQuery';
 import colors from '@common/colors';
+import { commonStyle } from '@common/styles';
 import Text from '@components/atoms/text';
 import ExpenseCard from '@components/molecules/cards/card-expense/ExpenseCard';
 import { Wallet, WalletExpense } from '@model/wallet';
@@ -13,16 +16,20 @@ import { UpdateExpensetNavProps, SharedScreen } from '@navigation/types/shared.t
 interface Props {
     wallet: Wallet;
     expenses?: WalletExpense[];
+    applyFilter?: (filter?: ExpenseFilter) => void;
 }
 
 /**
  *
  */
-const WalletExpenseContainer: React.FC<Props> = ({ wallet, expenses }) => {
+const WalletExpenseContainer: React.FC<Props> = ({ wallet, expenses, applyFilter }) => {
     const navigation = useNavigation();
 
     const walletDifference = wallet.currentBalance - wallet.initialBalance;
 
+    /**
+     *
+     */
     const navigateToUpdateExpense = useCallback(
         (expense: WalletExpense) => {
             const _navigation = navigation as unknown as UpdateExpensetNavProps['navigation'];
@@ -37,6 +44,9 @@ const WalletExpenseContainer: React.FC<Props> = ({ wallet, expenses }) => {
         [navigation]
     );
 
+    /**
+     *
+     */
     const _renderItem = useCallback(
         ({ item }: ListRenderItemInfo<WalletExpense>): React.ReactElement | null => (
             <ExpenseCard
@@ -53,10 +63,10 @@ const WalletExpenseContainer: React.FC<Props> = ({ wallet, expenses }) => {
      *
      */
     return (
-        <View style={{ flex: 1 }}>
-            <View style={{ paddingHorizontal: 16 }}>
-                <View style={{ flexDirection: 'row', marginBottom: 20 }}>
-                    <View style={{ flex: 1, alignItems: 'center' }}>
+        <View style={commonStyle.flex}>
+            <View style={styles.container}>
+                <View style={styles.wrapper}>
+                    <View style={styles.innerWrapper}>
                         <Text variant="display" variantStyle="medium-bold">
                             {wallet.currentBalance} €
                         </Text>
@@ -65,7 +75,7 @@ const WalletExpenseContainer: React.FC<Props> = ({ wallet, expenses }) => {
                         </Text>
                     </View>
 
-                    <View style={{ flex: 1, alignItems: 'center' }}>
+                    <View style={styles.box}>
                         <Text
                             variant="display"
                             variantStyle="medium-bold"
@@ -79,6 +89,9 @@ const WalletExpenseContainer: React.FC<Props> = ({ wallet, expenses }) => {
                         </Text>
                     </View>
                 </View>
+
+                {applyFilter ? <EspenseFilter onApplayFilter={applyFilter} /> : null}
+
                 <FlatList
                     bounces={false}
                     showsVerticalScrollIndicator={false}
@@ -89,5 +102,26 @@ const WalletExpenseContainer: React.FC<Props> = ({ wallet, expenses }) => {
         </View>
     );
 };
+
+/**
+ *
+ */
+const styles = StyleSheet.create({
+    container: {
+        paddingHorizontal: 16,
+    },
+    wrapper: {
+        flexDirection: 'row',
+        marginBottom: 20,
+    },
+    innerWrapper: {
+        flex: 1,
+        alignItems: 'center',
+    },
+    box: {
+        flex: 1,
+        alignItems: 'center',
+    },
+});
 
 export default WalletExpenseContainer;

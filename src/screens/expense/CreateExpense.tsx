@@ -7,7 +7,7 @@ import {
     MaterialIcons,
 } from '@expo/vector-icons';
 import React, { useCallback, useState } from 'react';
-import { View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Toast from 'react-native-toast-message';
 
@@ -15,6 +15,7 @@ import useCreateExpenseQuery from '@api/queries/expense/useCreateExpenseQuery';
 import { GET_EXPENSE_WALLET_QUERY_KEY } from '@api/queries/expense/useGetEspenseQuery';
 import queryClient from '@api/queryClient';
 import colors from '@common/colors';
+import { commonStyle } from '@common/styles';
 import Options from '@components/atoms/selects/Selects';
 import ConfirmButton from '@components/molecules/buttons/button-confirm/ConfirmButton';
 import DefaultInput from '@components/molecules/inputes/input-default/DefaultInput';
@@ -134,15 +135,15 @@ const CreateExpense: React.FC<NavProps> = ({ navigation, route }) => {
      *
      */
     return (
-        <SafeAreaView style={{ flex: 1 }}>
+        <SafeAreaView style={commonStyle.flex}>
             <DefaultHeader
                 title="Aggiungi Transazione"
                 onPress={navigation.goBack}
                 iconButton={<Feather name="x-circle" size={24} color={colors.solidWhite} />}
             />
 
-            <View style={{ flex: 1 }}>
-                <View style={{ marginBottom: 10, paddingHorizontal: 16 }}>
+            <View style={commonStyle.flex}>
+                <View style={styles.wrapperInput}>
                     <DefaultInput
                         onChangeText={() => null}
                         placeholder="Portafoglio"
@@ -150,7 +151,7 @@ const CreateExpense: React.FC<NavProps> = ({ navigation, route }) => {
                         icon={<AntDesign name="wallet" size={24} color={colors.emerald2} />}
                     />
                 </View>
-                <View style={{ marginBottom: 10, paddingHorizontal: 16 }}>
+                <View style={styles.wrapperInput}>
                     <DefaultInput
                         placeholder="Importo"
                         onChangeText={setAmount}
@@ -159,7 +160,7 @@ const CreateExpense: React.FC<NavProps> = ({ navigation, route }) => {
                         icon={<FontAwesome6 name="sack-dollar" size={24} color={colors.emerald2} />}
                     />
                 </View>
-                <View style={{ marginBottom: 10, paddingHorizontal: 16 }}>
+                <View style={styles.wrapperInput}>
                     <DefaultInput
                         editable={false}
                         pointerEvents="none"
@@ -169,7 +170,7 @@ const CreateExpense: React.FC<NavProps> = ({ navigation, route }) => {
                         icon={<Fontisto name="date" size={24} color={colors.emerald2} />}
                     />
                 </View>
-                <View style={{ marginBottom: 10, paddingHorizontal: 16 }}>
+                <View style={styles.wrapperInput}>
                     <DefaultInput
                         placeholder="nota"
                         onChangeText={setNote}
@@ -177,7 +178,7 @@ const CreateExpense: React.FC<NavProps> = ({ navigation, route }) => {
                         icon={<FontAwesome name="sticky-note" size={24} color={colors.emerald2} />}
                     />
                 </View>
-                <View style={{ marginBottom: 10, paddingHorizontal: 16 }}>
+                <View style={styles.wrapperInput}>
                     <DefaultInput
                         editable={false}
                         pointerEvents="none"
@@ -187,12 +188,12 @@ const CreateExpense: React.FC<NavProps> = ({ navigation, route }) => {
                         icon={<MaterialIcons name="category" size={24} color={colors.emerald2} />}
                     />
                 </View>
-                <View style={{ marginTop: 16, paddingHorizontal: 16 }}>
+                <View style={styles.wrapperInput}>
                     <Options choice={type} setChoice={setType} values={types} horizontal />
                 </View>
             </View>
 
-            <View style={{ paddingHorizontal: 16 }}>
+            <View style={commonStyle.marginHorizontal16}>
                 <ConfirmButton
                     onPress={createExpense}
                     title="Comferma"
@@ -204,5 +205,16 @@ const CreateExpense: React.FC<NavProps> = ({ navigation, route }) => {
         </SafeAreaView>
     );
 };
+
+/**
+ * Styles
+ *
+ */
+const styles = StyleSheet.create({
+    wrapperInput: {
+        marginBottom: 10,
+        paddingHorizontal: 16,
+    },
+});
 
 export default CreateExpense;

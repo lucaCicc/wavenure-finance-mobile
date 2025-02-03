@@ -28,6 +28,9 @@ export const commonStyle = StyleSheet.create({
     marginRight: {
         marginRight: 4,
     },
+    marginRight16: {
+        marginRight: 16,
+    },
     marginLeft8: {
         marginLeft: 8,
     },

@@ -1,6 +1,6 @@
 import { useNavigation } from '@react-navigation/native';
 import React, { useCallback } from 'react';
-import { View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 
 import colors from '@common/colors';
 import Text from '@components/atoms/text';
@@ -35,28 +35,12 @@ const EspenseEmptyContainer: React.FC<Props> = ({ wallet }) => {
      *
      */
     return (
-        <View style={{ flex: 1, justifyContent: 'center' }}>
-            <View
-                style={{
-                    alignItems: 'center',
-                }}>
-                <Text
-                    variant="title"
-                    variantStyle="h3"
-                    style={{
-                        textAlign: 'center',
-                        marginBottom: 5,
-                    }}>
+        <View style={styles.container}>
+            <View style={styles.wrapper}>
+                <Text variant="title" variantStyle="h3" style={styles.title}>
                     Non hai Spese!
                 </Text>
-                <Text
-                    variant="text"
-                    variantStyle="introduction"
-                    style={{
-                        textAlign: 'center',
-                        marginBottom: 16,
-                        color: colors.doveGray,
-                    }}>
+                <Text variant="text" variantStyle="introduction" style={styles.subTitle}>
                     Inizia a monitorare manualmente le tue spese
                 </Text>
             </View>
@@ -64,5 +48,27 @@ const EspenseEmptyContainer: React.FC<Props> = ({ wallet }) => {
         </View>
     );
 };
+
+/**
+ *
+ */
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        justifyContent: 'center',
+    },
+    wrapper: {
+        alignItems: 'center',
+    },
+    title: {
+        textAlign: 'center',
+        marginBottom: 5,
+    },
+    subTitle: {
+        textAlign: 'center',
+        marginBottom: 16,
+        color: colors.doveGray,
+    },
+});
 
 export default EspenseEmptyContainer;

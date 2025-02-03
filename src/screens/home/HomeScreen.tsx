@@ -1,10 +1,11 @@
 import { useEffect, useMemo, useState } from 'react';
-import { ActivityIndicator, View } from 'react-native';
+import { ActivityIndicator, StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
+import EspenseEmptyContainer from '@/container/espense-empty/EspenseEmptyContainer';
 import WalletExpenseContainer from '@/container/wallet-expense-container/WalletExpenseContainer';
 import WalletsEmptyContainer from '@/container/wallets-empty-container/WalletsEmptyContainer';
-import { useGetExpenseQuery } from '@api/queries/expense/useGetEspenseQuery';
+import { ExpenseFilter, useGetExpenseQuery } from '@api/queries/expense/useGetEspenseQuery';
 import { useGetWalletsQuery } from '@api/queries/wallet/useGetWalletsQuery';
 import colors from '@common/colors';
 import { Wallet } from '@model/wallet';
@@ -15,14 +16,19 @@ import { Wallet } from '@model/wallet';
  */
 const HomeScreen = () => {
     const [selectedWallet, setSelectedWallet] = useState<Wallet>();
-
+    const [filter, setFilter] = useState<ExpenseFilter>();
     const selectedWalletId = selectedWallet?.id;
 
-    const { data: walletResp } = useGetWalletsQuery();
+    // Query
+    const { data: walletResp, isLoading: isLoadingWallets } = useGetWalletsQuery();
 
-    const { data: expensesResp } = useGetExpenseQuery(selectedWalletId ?? -1, {
-        enabled: !!selectedWalletId,
-    });
+    const { data: expensesResp, isLoading: isExpenseWallets } = useGetExpenseQuery(
+        selectedWalletId ?? -1,
+        {
+            enabled: !!selectedWalletId,
+        },
+        filter
+    );
 
     const wallets = walletResp?.data.wallets;
     const expenses = expensesResp?.data;
@@ -34,32 +40,48 @@ const HomeScreen = () => {
         }
     }, [wallets]);
 
+    /**
+     *
+     */
     const renderContent = useMemo(() => {
-        if (wallets === undefined || expenses === undefined) {
-            return <ActivityIndicator size="small" color="#00ff00" />;
+        if (isLoadingWallets || isExpenseWallets) {
+            return <ActivityIndicator size="small" color={colors.riper} />;
         }
-
-        if (wallets?.length === 0) {
+        if (!wallets?.length) {
             return <WalletsEmptyContainer />;
         }
 
-        if (expenses?.length === 0) {
-            return <WalletsEmptyContainer />;
+        if (!expenses?.length && selectedWallet && !filter) {
+            return <EspenseEmptyContainer wallet={selectedWallet} />;
         }
 
-        if (wallets[0] && expenses) {
-            return <WalletExpenseContainer wallet={wallets[0]} expenses={expenses} />;
+        if (selectedWallet && expenses) {
+            return (
+                <WalletExpenseContainer
+                    wallet={selectedWallet}
+                    expenses={expenses ?? []}
+                    applyFilter={setFilter}
+                />
+            );
         }
-    }, [expenses, wallets]);
+    }, [expenses, filter, isExpenseWallets, isLoadingWallets, selectedWallet, wallets]);
 
     /**
      * Main redner
+     *
      */
-    return (
-        <SafeAreaView style={{ flex: 1, backgroundColor: colors.pampas }}>
-            {renderContent}
-        </SafeAreaView>
-    );
+    return <SafeAreaView style={styles.container}>{renderContent}</SafeAreaView>;
 };
+
+/**
+ * Styles
+ *
+ */
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        backgroundColor: colors.pampas,
+    },
+});
 
 export default HomeScreen;

@@ -7,7 +7,11 @@ import { HttpError } from '@model/error';
 import { WalletExpense } from '@model/wallet';
 import { getIsLogged } from '@store/modules/auth';
 
-const QUERY_KEY = (walletId: number) => ['get/wallet-espense', walletId];
+const QUERY_KEY = (walletId: number, filters?: ExpenseFilter) => [
+    'get/wallet-espense',
+    walletId,
+    filters,
+];
 
 type ExpenseResponse = {
     message: string;
@@ -17,11 +21,18 @@ type ExpenseResponse = {
 type Conf = {
     enabled?: boolean;
 };
+
+export type ExpenseFilter = {
+    startDate?: string;
+    amount?: string;
+    category?: string;
+};
+
 /**
  *
  *
  */
-const useGetExpenseQuery = (walletId: number, conf: Conf) => {
+const useGetExpenseQuery = (walletId: number, conf: Conf, filters?: ExpenseFilter) => {
     const isLogged = useSelector(getIsLogged);
     const fetch = useClient({});
 
@@ -29,20 +40,38 @@ const useGetExpenseQuery = (walletId: number, conf: Conf) => {
         ExpenseResponse,
         HttpError
     >({
-        queryKey: QUERY_KEY(walletId),
-        queryFn: () =>
-            fetch(`${API.WALLETS}/${walletId}/expenses`).then(async (response) => {
+        queryKey: QUERY_KEY(walletId, filters),
+        queryFn: () => {
+            const queryString =
+                filters &&
+                Object.entries(filters)
+                    .filter(([_, value]) => value) // Filtra solo i valori definiti
+                    .map(([key, value]) => `${key}=${value}`)
+                    .join('&');
+
+            console.log('queryString-1', queryString);
+
+            return fetch(
+                queryString
+                    ? `${API.WALLETS}/${walletId}/expenses?${queryString}`
+                    : `${API.WALLETS}/${walletId}/expenses`
+            ).then(async (response) => {
                 if (response.ok) {
                     return response.json();
                 }
                 throw new HttpError(await response.json());
-            }),
+            });
+        },
         staleTime: 0,
         retry: 3,
         enabled: isLogged && conf.enabled,
     });
 
-    return { data, isLoading, isError, isRefetching, isFetching };
+    return {
+        data,
+        isLoading: isRefetching || isFetching || isLoading,
+        isError,
+    };
 };
 
 export { useGetExpenseQuery, QUERY_KEY as GET_EXPENSE_WALLET_QUERY_KEY };
