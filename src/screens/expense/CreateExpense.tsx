@@ -55,7 +55,7 @@ const CreateExpense: React.FC<NavProps> = ({ navigation, route }) => {
         setCategory('OTHER');
     }, []);
 
-    const createExpense = useCallback(() => {
+    const createExpenseHendler = useCallback(() => {
         // TO DO: sanitize payload
         const payload = {
             amount: Number(amount),
@@ -195,7 +195,7 @@ const CreateExpense: React.FC<NavProps> = ({ navigation, route }) => {
 
             <View style={commonStyle.marginHorizontal16}>
                 <ConfirmButton
-                    onPress={createExpense}
+                    onPress={createExpenseHendler}
                     title="Comferma"
                     isLoading={isQueryLoading}
                     disable={!date || !amount || !category || !type}

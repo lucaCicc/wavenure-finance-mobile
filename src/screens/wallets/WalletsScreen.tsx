@@ -1,7 +1,7 @@
 import { FontAwesome5 } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import React, { useCallback } from 'react';
-import { ListRenderItemInfo } from 'react-native';
+import { ListRenderItemInfo, StyleSheet } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
@@ -56,8 +56,8 @@ const WalletsScreen = () => {
      *
      */
     return (
-        <SafeAreaView style={{ marginHorizontal: 16, marginTop: 16 }}>
-            <Text variant="title" variantStyle="h2" style={{ marginBottom: 10 }}>
+        <SafeAreaView style={styles.container}>
+            <Text variant="title" variantStyle="h2" style={styles.title}>
                 I tuoi portafogli
             </Text>
             <FlatList
@@ -70,5 +70,19 @@ const WalletsScreen = () => {
         </SafeAreaView>
     );
 };
+
+/**
+ * Styles
+ *
+ */
+const styles = StyleSheet.create({
+    container: {
+        marginHorizontal: 16,
+        marginTop: 16,
+    },
+    title: {
+        marginBottom: 10,
+    },
+});
 
 export default WalletsScreen;

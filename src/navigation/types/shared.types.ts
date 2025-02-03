@@ -10,8 +10,9 @@ import { MainStackParamList } from '@navigation/types/index.types';
 export enum SharedScreen {
     CREATE_WALLET = 'CreateWalletScreen',
     DETAILS_WALLET = 'DetailsWalletScreen',
-    CREATE_EXPENSE = 'CreateExpense',
-    UDPATE_EXPENSE = 'UpdateExpense',
+    CREATE_EXPENSE = 'CreateExpenseScreen',
+    UDPATE_EXPENSE = 'UpdateExpenseScreen',
+    CREATE_BUDGET = 'CreateBudgetScreen',
 }
 
 /**
@@ -28,6 +29,10 @@ export type SharedStackParamList = {
     [SharedScreen.DETAILS_WALLET]: {
         wallet: Wallet;
     };
+    [SharedScreen.DETAILS_WALLET]: {
+        wallet: Wallet;
+    };
+    [SharedScreen.CREATE_BUDGET]: undefined;
 };
 
 /**
@@ -50,5 +55,10 @@ export type CreateExpensetNavProps = CompositeScreenProps<
 
 export type UpdateExpensetNavProps = CompositeScreenProps<
     NativeStackScreenProps<SharedStackParamList, SharedScreen.UDPATE_EXPENSE>,
+    NativeStackScreenProps<MainStackParamList>
+>;
+
+export type CreateBudgetNavProps = CompositeScreenProps<
+    NativeStackScreenProps<SharedStackParamList, SharedScreen.CREATE_BUDGET>,
     NativeStackScreenProps<MainStackParamList>
 >;

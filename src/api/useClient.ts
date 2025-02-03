@@ -66,7 +66,7 @@ export function useClient({ skipCheckToken = false }: Props) {
                     message: `[Response status] ${endpoint} ${response.status}`,
                 });
                 if (response.status === HTTP_STATUS_CODE.FORBIDDEN) {
-                    expireSessions();
+                    // expireSessions();
 
                     const errorResponse: HttpErrorResponse = await response.json();
 

@@ -17,6 +17,15 @@ export interface WalletExpense {
     walletId: number;
 }
 
+export interface Budget {
+    id: number;
+    amount: number;
+    name: string;
+    currency: 'EU';
+    category: ExpenseCategory;
+    userId: number;
+}
+
 export type ExpenseCategory =
     | 'WORK'
     | 'FAMILY'

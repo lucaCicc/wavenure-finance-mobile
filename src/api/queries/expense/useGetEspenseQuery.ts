@@ -36,7 +36,7 @@ const useGetExpenseQuery = (walletId: number, conf: Conf, filters?: ExpenseFilte
     const isLogged = useSelector(getIsLogged);
     const fetch = useClient({});
 
-    const { data, isLoading, isError, isRefetching, isFetching } = useQuery<
+    const { data, isLoading, isError, isRefetching, isFetching, refetch } = useQuery<
         ExpenseResponse,
         HttpError
     >({
@@ -45,11 +45,11 @@ const useGetExpenseQuery = (walletId: number, conf: Conf, filters?: ExpenseFilte
             const queryString =
                 filters &&
                 Object.entries(filters)
-                    .filter(([_, value]) => value) // Filtra solo i valori definiti
+                    .filter(([_, value]) => value)
                     .map(([key, value]) => `${key}=${value}`)
                     .join('&');
 
-            console.log('queryString-1', queryString);
+            console.log('isLogged && conf.enabled', isLogged && conf.enabled);
 
             return fetch(
                 queryString
@@ -62,8 +62,6 @@ const useGetExpenseQuery = (walletId: number, conf: Conf, filters?: ExpenseFilte
                 throw new HttpError(await response.json());
             });
         },
-        staleTime: 0,
-        retry: 3,
         enabled: isLogged && conf.enabled,
     });
 
@@ -71,6 +69,7 @@ const useGetExpenseQuery = (walletId: number, conf: Conf, filters?: ExpenseFilte
         data,
         isLoading: isRefetching || isFetching || isLoading,
         isError,
+        refetch,
     };
 };
 

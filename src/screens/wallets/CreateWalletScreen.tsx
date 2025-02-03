@@ -1,13 +1,14 @@
 import { Entypo, Feather, Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import { useCallback, useState } from 'react';
-import { View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import useCreateWalletQuery from '@api/queries/wallet/useCreateWalletQuery';
 import { GET_WALLETS_QUERY_KEY } from '@api/queries/wallet/useGetWalletsQuery';
 import queryClient from '@api/queryClient';
 import colors from '@common/colors';
+import { commonStyle } from '@common/styles';
 import ConfirmButton from '@components/molecules/buttons/button-confirm/ConfirmButton';
 import DefaultInput from '@components/molecules/inputes/input-default/DefaultInput';
 import DefaultHeader from '@components/organisms/headers/header-default/DefaultHeader';
@@ -24,6 +25,9 @@ const CreateWalletScreen = () => {
     const [balance, setBalance] = useState('');
     const navigation = useNavigation();
 
+    /**
+     *
+     */
     const handleCreteWallet = useCallback(() => {
         creteWallet(
             { currency: 'EU', initialBalance: +balance, name: name },
@@ -46,15 +50,15 @@ const CreateWalletScreen = () => {
      *
      */
     return (
-        <SafeAreaView style={{ flex: 1 }}>
+        <SafeAreaView style={commonStyle.flex}>
             <DefaultHeader
                 title="Crea un Nuovo Protafoglio"
                 onPress={navigation.goBack}
                 iconButton={<Feather name="x-circle" size={24} color={colors.solidWhite} />}
             />
 
-            <View style={{ marginHorizontal: 24, flex: 1 }}>
-                <View style={{ marginBottom: 10 }}>
+            <View style={styles.wrapper}>
+                <View style={commonStyle.marginBottom10}>
                     <DefaultInput
                         onChangeText={setName}
                         placeholder="Name"
@@ -62,7 +66,7 @@ const CreateWalletScreen = () => {
                         icon={<Entypo name="wallet" size={24} color={colors.emerald2} />}
                     />
                 </View>
-                <View style={{ marginBottom: 10 }}>
+                <View style={commonStyle.marginBottom10}>
                     <DefaultInput
                         value={balance}
                         onChangeText={setBalance}
@@ -83,7 +87,7 @@ const CreateWalletScreen = () => {
                 />
             </View>
 
-            <View style={{ marginHorizontal: 16, marginVertical: 16 }}>
+            <View style={styles.wrapperCta}>
                 <ConfirmButton
                     isLoading={isQueryLoading}
                     disable={!name || !balance}
@@ -95,4 +99,18 @@ const CreateWalletScreen = () => {
     );
 };
 
+/**
+ * Styles
+ *
+ */
+const styles = StyleSheet.create({
+    wrapper: {
+        marginHorizontal: 24,
+        flex: 1,
+    },
+    wrapperCta: {
+        marginHorizontal: 16,
+        marginVertical: 16,
+    },
+});
 export default CreateWalletScreen;

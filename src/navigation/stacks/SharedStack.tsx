@@ -1,6 +1,7 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import { SharedScreen, SharedStackParamList } from '@navigation/types/shared.types';
+import CreateBudget from '@screens/budget/CreateBudget';
 import CreateExpense from '@screens/expense/CreateExpense';
 import UpdateExpense from '@screens/expense/UpdateExpense';
 import CreateWalletScreen from '@screens/wallets/CreateWalletScreen';
@@ -14,6 +15,7 @@ const SharedStack = () => (
         <Stack.Screen name={SharedScreen.DETAILS_WALLET} component={DetailsWalletScreen} />
         <Stack.Screen name={SharedScreen.CREATE_EXPENSE} component={CreateExpense} />
         <Stack.Screen name={SharedScreen.UDPATE_EXPENSE} component={UpdateExpense} />
+        <Stack.Screen name={SharedScreen.CREATE_BUDGET} component={CreateBudget} />
     </Stack.Navigator>
 );
 

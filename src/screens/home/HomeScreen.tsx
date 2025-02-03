@@ -25,7 +25,7 @@ const HomeScreen = () => {
     const { data: expensesResp, isLoading: isExpenseWallets } = useGetExpenseQuery(
         selectedWalletId ?? -1,
         {
-            enabled: !!selectedWalletId,
+            enabled: selectedWalletId !== undefined,
         },
         filter
     );

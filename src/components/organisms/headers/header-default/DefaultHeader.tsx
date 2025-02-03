@@ -7,12 +7,12 @@ import ButtonCircle from '@components/molecules/buttons/button-circle/CircleButt
 type DefaultHeaderProps = {
     iconButton?: ReactNode;
     title: string;
-    onPress: () => void;
+    onPress?: () => void;
 };
 
 const DefaultHeader: React.FC<DefaultHeaderProps> = ({ title, onPress, iconButton }) => (
     <View style={styles.header}>
-        <ButtonCircle onPress={onPress} icon={iconButton} />
+        {onPress ? <ButtonCircle onPress={onPress} icon={iconButton} /> : null}
         <Text variant="title" variantStyle={'h2'} style={styles.title}>
             {title}
         </Text>

@@ -9,6 +9,7 @@ import { fetchConfig } from '@config/http';
 export enum API {
     AUTH_LOGIN = '/auth/login',
     WALLETS = '/wallets',
+    BUDGET = '/budgets',
 }
 
 const queryClient = new QueryClient({

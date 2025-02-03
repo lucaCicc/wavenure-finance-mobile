@@ -5,31 +5,22 @@ import { StyleSheet, View } from 'react-native';
 import colors from '@common/colors';
 import Text from '@components/atoms/text';
 import ConfirmButton from '@components/molecules/buttons/button-confirm/ConfirmButton';
-import { Wallet } from '@model/wallet';
 import { MainStack } from '@navigation/types/index.types';
-import { CreateExpensetNavProps, SharedScreen } from '@navigation/types/shared.types';
-
-interface Props {
-    wallet: Wallet;
-}
+import { CreateBudgetNavProps, SharedScreen } from '@navigation/types/shared.types';
 
 /**
  *
  *
  */
-const EspenseEmptyContainer: React.FC<Props> = ({ wallet }) => {
+const BadgetEmptyContainer: React.FC = () => {
     const navigation = useNavigation();
 
-    const navigateToCreteExpense = useCallback(() => {
-        const _navigation = navigation as unknown as CreateExpensetNavProps['navigation'];
-
+    const navigateToCreteBudget = useCallback(() => {
+        const _navigation = navigation as unknown as CreateBudgetNavProps['navigation'];
         _navigation.navigate(MainStack.SHARED, {
-            screen: SharedScreen.CREATE_EXPENSE,
-            params: {
-                wallet,
-            },
+            screen: SharedScreen.CREATE_BUDGET,
         });
-    }, [navigation, wallet]);
+    }, [navigation]);
 
     /**
      *
@@ -38,13 +29,13 @@ const EspenseEmptyContainer: React.FC<Props> = ({ wallet }) => {
         <View style={styles.container}>
             <View style={styles.wrapper}>
                 <Text variant="title" variantStyle="h3" style={styles.title}>
-                    Non hai Spese!
+                    Non hai budget
                 </Text>
                 <Text variant="text" variantStyle="introduction" style={styles.subTitle}>
-                    Inizia a monitorare manualmente le tue spese
+                    Comincia a risparmiare creando dei budget e ti aiuteremo a mantenerli
                 </Text>
             </View>
-            <ConfirmButton onPress={navigateToCreteExpense} title="Aggiungi una Spesa" />
+            <ConfirmButton onPress={navigateToCreteBudget} title="Crea il tuo primo budget" />
         </View>
     );
 };
@@ -55,7 +46,6 @@ const EspenseEmptyContainer: React.FC<Props> = ({ wallet }) => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        paddingHorizontal: 16,
         justifyContent: 'center',
     },
     wrapper: {
@@ -72,4 +62,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default EspenseEmptyContainer;
+export default BadgetEmptyContainer;
