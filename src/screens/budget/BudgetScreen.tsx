@@ -21,11 +21,8 @@ const BudgetScreen = () => {
     const isFocused = useIsFocused();
 
     const { data: wallets } = useGetWalletsQuery();
-
     const wallet = wallets?.data?.wallets[0];
-
     const { data: budgetData, isLoading } = useGetBudgetListQuery();
-
     const budget = budgetData?.data?.[0];
 
     const { data: expenseData, refetch } = useGetExpenseQuery(
