@@ -11,8 +11,9 @@ import { View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Toast from 'react-native-toast-message';
 
-import useCreateExpenseQuery from '@api/queries/expense/useCreateExpenseQuery';
+import useDeleteExpenseQuery from '@api/queries/expense/useDeleteExpenseQuery';
 import { GET_EXPENSE_WALLET_QUERY_KEY } from '@api/queries/expense/useGetEspenseQuery';
+import useUpdateExpenseQuery from '@api/queries/expense/useUpdateExpenseQuery';
 import queryClient from '@api/queryClient';
 import colors from '@common/colors';
 import Options from '@components/atoms/selects/Selects';
@@ -23,11 +24,11 @@ import CalenderTemplate from '@components/templates/drawer/CalenderTemplate';
 import TransactionCategoryTemplate from '@components/templates/drawer/TransactionCategoryTemplate';
 import { HttpError } from '@model/error';
 import { ExpenseCategory, ExpenseType } from '@model/wallet';
-import { CreateExpensetNavProps } from '@navigation/types/shared.types';
+import { UpdateExpensetNavProps } from '@navigation/types/shared.types';
 import { useBottomSheet } from '@providers/bottom-sheet';
 import { BOTTOM_SHEET_ID } from '@providers/bottom-sheet/type';
 
-type NavProps = object & CreateExpensetNavProps;
+type NavProps = object & UpdateExpensetNavProps;
 
 const types: ExpenseType[] = ['EXPENSE', 'INCOME'];
 
@@ -35,16 +36,17 @@ const types: ExpenseType[] = ['EXPENSE', 'INCOME'];
  *
  *
  */
-const CreateExpense: React.FC<NavProps> = ({ navigation, route }) => {
-    const wallet = route.params.wallet;
+const UpdateExpense: React.FC<NavProps> = ({ navigation, route }) => {
+    const expense = route.params.expense;
     const bottomSheet = useBottomSheet();
-    const { creteExpense, isQueryLoading } = useCreateExpenseQuery();
+    const { updateExpense, isUpdateExpenseLoading } = useUpdateExpenseQuery();
+    const { deleteExpense, isDeleteExpense } = useDeleteExpenseQuery();
 
-    const [date, setDate] = useState<string>('');
-    const [note, setNote] = useState<string>('');
-    const [amount, setAmount] = useState<string>('');
-    const [type, setType] = useState<ExpenseType>('EXPENSE');
-    const [category, setCategory] = useState<ExpenseCategory>('OTHER');
+    const [date, setDate] = useState<string>(expense.date.split('T')[0]);
+    const [note, setNote] = useState<string>(expense.note);
+    const [amount, setAmount] = useState<string>(expense.amount.toString());
+    const [type, setType] = useState<ExpenseType>(expense.type);
+    const [category, setCategory] = useState<ExpenseCategory>(expense.category);
 
     const cleanInput = useCallback(() => {
         setDate('');
@@ -54,7 +56,7 @@ const CreateExpense: React.FC<NavProps> = ({ navigation, route }) => {
         setCategory('OTHER');
     }, []);
 
-    const createExpense = useCallback(() => {
+    const updateExpenseHendler = useCallback(() => {
         // TO DO: sanitize payload
         const payload = {
             amount: Number(amount),
@@ -62,22 +64,22 @@ const CreateExpense: React.FC<NavProps> = ({ navigation, route }) => {
             date: new Date(date).toISOString(),
             note,
             type,
-            walletId: wallet.id,
+            walletId: expense.walletId,
+            id: expense.id,
         };
 
-        creteExpense(payload, {
+        updateExpense(payload, {
             onSuccess: () => {
-                queryClient.fetchQuery(GET_EXPENSE_WALLET_QUERY_KEY(wallet.id));
-
-                cleanInput();
+                queryClient.fetchQuery(GET_EXPENSE_WALLET_QUERY_KEY(expense.walletId));
 
                 Toast.show({
                     autoHide: true,
                     type: 'success',
-                    text1: 'Transazione create!',
+                    text1: 'Aggiornameto avvenuto con successo',
                     position: 'top',
+                    visibilityTime: 400,
                     topOffset: 60,
-                    text2: 'Aggiungi una nuova Transazione',
+                    onHide: () => navigation.goBack(),
                 });
             },
             onError: (_: HttpError) => {
@@ -88,7 +90,51 @@ const CreateExpense: React.FC<NavProps> = ({ navigation, route }) => {
                 });
             },
         });
-    }, [amount, category, cleanInput, creteExpense, date, note, type, wallet.id]);
+    }, [
+        amount,
+        category,
+        date,
+        note,
+        type,
+        expense.walletId,
+        expense.id,
+        updateExpense,
+        navigation,
+    ]);
+
+    /**
+     *
+     */
+    const deleteExpenseHendler = useCallback(() => {
+        deleteExpense(
+            {
+                id: expense.id,
+                walletId: expense.walletId,
+            },
+            {
+                onSuccess: () => {
+                    queryClient.fetchQuery(GET_EXPENSE_WALLET_QUERY_KEY(expense.walletId));
+
+                    Toast.show({
+                        autoHide: true,
+                        type: 'success',
+                        text1: 'Transazione rimossa!',
+                        position: 'top',
+                        topOffset: 300,
+                        visibilityTime: 400,
+                        onHide: () => navigation.goBack(),
+                    });
+                },
+                onError: (_: HttpError) => {
+                    Toast.show({
+                        autoHide: true,
+                        type: 'error',
+                        text1: 'Non possiamo eliminare la Transazione',
+                    });
+                },
+            }
+        );
+    }, [deleteExpense, expense.id, expense.walletId, navigation]);
 
     /**
      *
@@ -136,7 +182,7 @@ const CreateExpense: React.FC<NavProps> = ({ navigation, route }) => {
     return (
         <SafeAreaView style={{ flex: 1 }}>
             <DefaultHeader
-                title="Aggiungi Transazione"
+                title="Aggiorna Transazione"
                 onPress={navigation.goBack}
                 iconButton={<Feather name="x-circle" size={24} color={colors.solidWhite} />}
             />
@@ -146,7 +192,7 @@ const CreateExpense: React.FC<NavProps> = ({ navigation, route }) => {
                     <DefaultInput
                         onChangeText={() => null}
                         placeholder="Portafoglio"
-                        value={wallet.name}
+                        value={'Portafoglio'}
                         icon={<AntDesign name="wallet" size={24} color={colors.emerald2} />}
                     />
                 </View>
@@ -192,11 +238,20 @@ const CreateExpense: React.FC<NavProps> = ({ navigation, route }) => {
                 </View>
             </View>
 
+            <View style={{ paddingHorizontal: 16, marginBottom: 8 }}>
+                <ConfirmButton
+                    onPress={deleteExpenseHendler}
+                    style={{ backgroundColor: colors.milanoRed2 }}
+                    title="Elimina"
+                    isLoading={isDeleteExpense}
+                    disable={!date || !amount || !category || !type}
+                />
+            </View>
             <View style={{ paddingHorizontal: 16 }}>
                 <ConfirmButton
-                    onPress={createExpense}
-                    title="Comferma"
-                    isLoading={isQueryLoading}
+                    onPress={updateExpenseHendler}
+                    title="Aggiorna"
+                    isLoading={isUpdateExpenseLoading}
                     disable={!date || !amount || !category || !type}
                 />
             </View>
@@ -205,4 +260,4 @@ const CreateExpense: React.FC<NavProps> = ({ navigation, route }) => {
     );
 };
 
-export default CreateExpense;
+export default UpdateExpense;

@@ -3,33 +3,25 @@ import { useMutation } from '@tanstack/react-query';
 import { API } from '@api/queryClient';
 import { useClient } from '@api/useClient';
 import { HttpError } from '@model/error';
-import { Wallet } from '@model/wallet';
+import { WalletExpense } from '@model/wallet';
 
-interface WalletRequest {
-    name: string;
-    initialBalance: number;
-    currency: string;
-}
-
-export interface WalletResponse {
-    message: string;
-    data: Wallet;
-}
+type CreateExpensePayload = Omit<WalletExpense, 'id'>;
+type CreateExpenseResponse = WalletExpense;
 
 /**
  *
  *
  */
-function useCreateWalletQuery() {
+function useCreateExpenseQuery() {
     const fetch = useClient({});
 
     const { status, mutate, error, isError, isLoading } = useMutation<
-        WalletResponse,
+        CreateExpenseResponse,
         HttpError,
-        WalletRequest
+        CreateExpensePayload
     >({
         mutationFn: (payload) =>
-            fetch(API.WALLETS, {
+            fetch(`${API.WALLETS}/${payload.walletId}/expenses`, {
                 method: 'POST',
                 body: JSON.stringify(payload),
             }).then(async (response) => {
@@ -40,7 +32,7 @@ function useCreateWalletQuery() {
             }),
     });
 
-    return { creteWallet: mutate, error, isError, isQueryLoading: isLoading, status };
+    return { creteExpense: mutate, error, isError, isQueryLoading: isLoading, status };
 }
 
-export default useCreateWalletQuery;
+export default useCreateExpenseQuery;

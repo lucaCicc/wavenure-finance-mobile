@@ -1,11 +1,11 @@
 import { useCallback } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import queryClient, { API } from '@api/queryClient';
 import { API_URL, defaultHeaders } from '@config/http';
 import Logger from '@helper/logger';
 import { GenericErrorCode, HTTP_STATUS_CODE, HttpError, HttpErrorResponse } from '@model/error';
-import { getAccessToken } from '@store/modules/auth';
+import { getAccessToken, setAccessToken } from '@store/modules/auth';
 
 type Props = {
     skipCheckToken?: boolean;
@@ -19,11 +19,13 @@ type Endpoint = `${API}` | `${API}/${string}` | `${API}&${string}` | `${API}?${s
  */
 export function useClient({ skipCheckToken = false }: Props) {
     const accessToken = useSelector(getAccessToken);
+    const dispatch = useDispatch();
 
     const expireSessions = useCallback(() => {
+        dispatch(setAccessToken(null));
         queryClient.clear();
         queryClient.invalidateQueries();
-    }, []);
+    }, [dispatch]);
 
     const makeRequest = useCallback(
         async (endpoint: Endpoint, init?: any) => {
@@ -63,7 +65,7 @@ export function useClient({ skipCheckToken = false }: Props) {
                     file: 'useClient.ts',
                     message: `[Response status] ${endpoint} ${response.status}`,
                 });
-                if (response.status === HTTP_STATUS_CODE.UNAUTHORIZED) {
+                if (response.status === HTTP_STATUS_CODE.FORBIDDEN) {
                     expireSessions();
 
                     const errorResponse: HttpErrorResponse = await response.json();

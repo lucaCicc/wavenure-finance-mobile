@@ -3,7 +3,6 @@ import { useSelector } from 'react-redux';
 
 import { API } from '@api/queryClient';
 import { useClient } from '@api/useClient';
-import { CACHE_TIMES_5_MINUTES } from '@config/http';
 import { HttpError } from '@model/error';
 import { WalletExpense } from '@model/wallet';
 import { getIsLogged } from '@store/modules/auth';
@@ -15,11 +14,14 @@ type ExpenseResponse = {
     data: WalletExpense[];
 };
 
+type Conf = {
+    enabled?: boolean;
+};
 /**
  *
  *
  */
-const useGetExpenseQuery = (walletId: number) => {
+const useGetExpenseQuery = (walletId: number, conf: Conf) => {
     const isLogged = useSelector(getIsLogged);
     const fetch = useClient({});
 
@@ -35,13 +37,12 @@ const useGetExpenseQuery = (walletId: number) => {
                 }
                 throw new HttpError(await response.json());
             }),
-        cacheTime: CACHE_TIMES_5_MINUTES,
         staleTime: 0,
         retry: 3,
-        enabled: isLogged,
+        enabled: isLogged && conf.enabled,
     });
 
     return { data, isLoading, isError, isRefetching, isFetching };
 };
 
-export { useGetExpenseQuery, QUERY_KEY as GET_WALLETS_QUERY_KEY };
+export { useGetExpenseQuery, QUERY_KEY as GET_EXPENSE_WALLET_QUERY_KEY };

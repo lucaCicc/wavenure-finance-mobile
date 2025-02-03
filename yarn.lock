@@ -1636,6 +1636,7 @@ __metadata:
     react-native-reanimated: "npm:~3.16.1"
     react-native-safe-area-context: "npm:4.12.0"
     react-native-screens: "npm:~4.4.0"
+    react-native-toast-message: "npm:^2.2.1"
     react-redux: "npm:^8.1.3"
     redux-persist: "npm:^6.0.0"
     typescript: "npm:^5.3.3"
@@ -8818,6 +8819,16 @@ __metadata:
   version: 1.0.5
   resolution: "react-native-swipe-gestures@npm:1.0.5"
   checksum: 10c0/33bb8bd402de82ed751a8f1913fe7e02ddc533edb7178bf9e499387b93d0d14154cef120f273c554bb988ad1ba87165b80be213611cb92af8875f2380ec7878b
+  languageName: node
+  linkType: hard
+
+"react-native-toast-message@npm:^2.2.1":
+  version: 2.2.1
+  resolution: "react-native-toast-message@npm:2.2.1"
+  peerDependencies:
+    react: "*"
+    react-native: "*"
+  checksum: 10c0/03418b03ae345f5fe1c1747a98ae9c420a9ea37402d849920a14bfc6eb01541ad934266ae2656433604448d2fba1266ab6f6be649a49c9b22445e86444c1f6de
   languageName: node
   linkType: hard
 

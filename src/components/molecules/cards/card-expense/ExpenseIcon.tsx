@@ -14,7 +14,7 @@ type ExpenseIconProps = {
     name: ExpenseCategory;
 };
 
-const ExpenseIcon: React.FC<ExpenseIconProps> = ({ name }) => {
+export const ExpenseIcon: React.FC<ExpenseIconProps> = ({ name }) => {
     switch (name) {
         case 'WORK':
             return <FontAwesome name="black-tie" size={24} color="black" />;

@@ -1,7 +1,7 @@
 import type { CompositeScreenProps } from '@react-navigation/native';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 
-import { Wallet } from '@model/wallet';
+import { Wallet, WalletExpense } from '@model/wallet';
 import { MainStackParamList } from '@navigation/types/index.types';
 
 /**
@@ -11,13 +11,19 @@ export enum SharedScreen {
     CREATE_WALLET = 'CreateWalletScreen',
     DETAILS_WALLET = 'DetailsWalletScreen',
     CREATE_EXPENSE = 'CreateExpense',
+    UDPATE_EXPENSE = 'UpdateExpense',
 }
 
 /**
  * Stack Params
  */
 export type SharedStackParamList = {
-    [SharedScreen.CREATE_WALLET]: undefined;
+    [SharedScreen.CREATE_WALLET]: {
+        wallet: Wallet;
+    };
+    [SharedScreen.UDPATE_EXPENSE]: {
+        expense: WalletExpense;
+    };
     [SharedScreen.CREATE_EXPENSE]: {
         wallet: Wallet;
     };
@@ -41,5 +47,10 @@ export type DetailsWalletNavProps = CompositeScreenProps<
 
 export type CreateExpensetNavProps = CompositeScreenProps<
     NativeStackScreenProps<SharedStackParamList, SharedScreen.CREATE_EXPENSE>,
+    NativeStackScreenProps<MainStackParamList>
+>;
+
+export type UpdateExpensetNavProps = CompositeScreenProps<
+    NativeStackScreenProps<SharedStackParamList, SharedScreen.UDPATE_EXPENSE>,
     NativeStackScreenProps<MainStackParamList>
 >;

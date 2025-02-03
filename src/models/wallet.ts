@@ -14,7 +14,7 @@ export interface WalletExpense {
     note: string;
     type: ExpenseType;
     category: ExpenseCategory;
-    walletId: 1;
+    walletId: number;
 }
 
 export type ExpenseCategory =
