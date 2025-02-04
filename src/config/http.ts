@@ -18,4 +18,4 @@ export const defaultHeaders = {
     'Content-Type': 'application/json',
 };
 
-export const API_URL = `${'http://192.168.178.47:3000/api'}/${'v1'}`;
+export const API_URL = `${process.env.EXPO_PUBLIC_API_URL}/${'v1'}`;
