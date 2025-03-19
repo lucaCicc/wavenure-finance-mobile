@@ -1,5 +1,4 @@
 Welcome to this project repository!
-Welcome to the Compass project repository!
 
 ## Run DB e Backend with Docker
 
