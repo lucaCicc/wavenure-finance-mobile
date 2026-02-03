@@ -1,9 +1,3 @@
 Welcome to this project repository!
 
-## Run DB e Backend with Docker
-
-From the root of the project launch the following command:
-
-```
-$ docker compose up
-```
+see [wavenure-finance-app](https://github.com/lucaCicc/wavenure-finance-app) repository for readme
