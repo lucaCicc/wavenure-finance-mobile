@@ -27,7 +27,7 @@ const PasswordInput: React.FC<Props> = ({ placeholder = 'Password', onChange, ..
                 {secureText ? (
                     <Feather name="eye-off" size={24} color="black" />
                 ) : (
-                    <AntDesign name="eyeo" size={24} color="black" />
+                    <AntDesign name="eye" size={24} color="black" />
                 )}
             </TouchableOpacity>
         </View>

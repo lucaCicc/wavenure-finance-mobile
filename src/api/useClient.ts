@@ -1,3 +1,4 @@
+import axios from 'axios';
 import { useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -12,6 +13,12 @@ type Props = {
 };
 
 type Endpoint = `${API}` | `${API}/${string}` | `${API}&${string}` | `${API}?${string}`;
+
+type ClientResponse = {
+    ok: boolean;
+    status: number;
+    json: () => Promise<any>;
+};
 
 /**
  *
@@ -28,7 +35,7 @@ export function useClient({ skipCheckToken = false }: Props) {
     }, [dispatch]);
 
     const makeRequest = useCallback(
-        async (endpoint: Endpoint, init?: any) => {
+        async (endpoint: Endpoint, init?: any): Promise<ClientResponse> => {
             const normalizedInit = {
                 ...init,
                 headers: {
@@ -42,7 +49,21 @@ export function useClient({ skipCheckToken = false }: Props) {
                 message: `[Request] ${API_URL}${endpoint} ${JSON.stringify(normalizedInit)}`,
             });
 
-            return fetch(`${API_URL}${endpoint}`, normalizedInit);
+            const { method, headers, body } = normalizedInit;
+
+            const response = await axios.request({
+                url: `${API_URL}${endpoint}`,
+                method,
+                headers,
+                data: body,
+                validateStatus: () => true,
+            });
+
+            return {
+                ok: response.status >= 200 && response.status < 300,
+                status: response.status,
+                json: async () => response.data,
+            };
         },
         [accessToken]
     );

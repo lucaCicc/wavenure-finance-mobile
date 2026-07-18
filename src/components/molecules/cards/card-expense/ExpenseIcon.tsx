@@ -23,7 +23,7 @@ export const ExpenseIcon: React.FC<ExpenseIconProps> = ({ name }) => {
         case 'GIFT':
             return <AntDesign name="gift" size={24} color="black" />;
         case 'SHOPPING':
-            return <AntDesign name="shoppingcart" size={24} color="black" />;
+            return <AntDesign name="shopping-cart" size={24} color="black" />;
         case 'HOME':
             return <FontAwesome name="home" size={24} color="black" />;
         case 'CAR':

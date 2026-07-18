@@ -7,7 +7,7 @@ android
 ios
 assets
 !android/app/main/assets/translations
-yarn.lock
+pnpm-lock.yaml
 app/utils/country-geojson.ts
 plop-templates
 package.json

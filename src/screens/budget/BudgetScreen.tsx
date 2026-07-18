@@ -87,6 +87,13 @@ const BudgetScreen = () => {
                 I tuoi Budget
             </Text>
 
+            {budget && (
+                <Text variant="title" variantStyle="h5" style={commonStyle.marginBottom10}>
+                    Monitora quanto hai già utilizzato. La barra di avanzamento ti mostra in tempo
+                    reale quanto hai speso rispetto al limite impostato.
+                </Text>
+            )}
+
             {budget ? (
                 <View>
                     <Text variant="title" variantStyle="h1" style={{ color: colors.greenHaz }}>

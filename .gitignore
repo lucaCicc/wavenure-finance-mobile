@@ -39,6 +39,7 @@ web-build/
 npm-debug.*
 yarn-debug.*
 yarn-error.*
+pnpm-debug.*
 
 # fastlane
 fastlane/report.xml

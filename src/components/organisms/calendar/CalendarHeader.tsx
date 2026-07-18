@@ -52,9 +52,7 @@ const CustomHeader = React.forwardRef((props: any, ref) => {
                 <View style={styles.boxLeft}>
                     <View>
                         <ButtonCircle
-                            icon={
-                                <AntDesign name="banckward" size={18} color={colors.solidWhite} />
-                            }
+                            icon={<AntDesign name="backward" size={18} color={colors.solidWhite} />}
                             onPress={() => {
                                 setNewYear({ next: false });
                             }}
@@ -63,7 +61,7 @@ const CustomHeader = React.forwardRef((props: any, ref) => {
                     <View>
                         <ButtonCircle
                             icon={
-                                <AntDesign name="arrowleft" size={18} color={colors.solidWhite} />
+                                <AntDesign name="arrow-left" size={18} color={colors.solidWhite} />
                             }
                             onPress={() => {
                                 setNewMonth({ next: false });
@@ -80,7 +78,7 @@ const CustomHeader = React.forwardRef((props: any, ref) => {
                     <View>
                         <ButtonCircle
                             icon={
-                                <AntDesign name="arrowright" size={18} color={colors.solidWhite} />
+                                <AntDesign name="arrow-right" size={18} color={colors.solidWhite} />
                             }
                             onPress={() => {
                                 setNewMonth({ next: true });

@@ -3,9 +3,7 @@ import { configureStore } from '@reduxjs/toolkit';
 
 import rootReducer from './rootReducer';
 
-const middleware: Middleware[] = [
-    /* add middlewares */
-];
+const middleware: Middleware[] = [/* add middlewares */];
 
 if (__DEV__) {
     /* add dev check */

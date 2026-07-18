@@ -256,7 +256,7 @@ const BottomDrawer = forwardRef<BottomDrawerRefProps, Props>(
                 <Animated.View
                     onTouchStart={closeOnBackdrop ? closeDrawer : undefined}
                     animatedProps={backdropProps}
-                    style={StyleSheet.compose(StyleSheet.absoluteFillObject, backdropStyle)}
+                    style={[StyleSheet.absoluteFill, backdropStyle]}
                 />
                 <Animated.View style={wrapperStyle}>
                     <GestureDetector gesture={headerPanGesture}>

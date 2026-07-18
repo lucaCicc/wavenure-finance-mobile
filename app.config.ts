@@ -9,15 +9,12 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
     orientation: 'portrait',
     userInterfaceStyle: 'automatic',
     platforms: ['ios', 'android'],
-    newArchEnabled: true,
-    jsEngine: 'hermes',
     androidStatusBar: {
         translucent: true,
     },
     assetBundlePatterns: ['**/*'],
     ios: {
         buildNumber: '1',
-        icon: './assets/icon-app.png',
         supportsTablet: true,
         bundleIdentifier: 'com.financeapp',
     },
@@ -50,19 +47,22 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
     },
     plugins: [
         [
+            "expo-font"
+        ],
+        [
             'expo-build-properties',
             {
                 android: {
                     minSdkVersion: 26,
-                    compileSdkVersion: 35,
+                    compileSdkVersion: 36,
                     targetSdkVersion: 34,
                     buildToolsVersion: '35.0.0',
-                    kotlinVersion: '1.9.24',
+                    kotlinVersion: '2.1.20',
                     enableProguardInReleaseBuilds: true,
                     enableShrinkResourcesInReleaseBuilds: true,
                 },
                 ios: {
-                    deploymentTarget: '15.1',
+                    deploymentTarget: '16.4',
                     useFrameworks: 'static',
                 },
             },
@@ -70,8 +70,18 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
         [
             'expo-splash-screen',
             {
+                android: {
+                    image: './assets/icon-app.png',
+                    resizeMode: 'cover',
+                    backgroundColor: '#FFFFFF',
+                },
+                ios: {
+                    image: './assets/icon-app.png',
+                    resizeMode: 'cover',
+                    enableFullScreenImage_legacy: true,
+                    backgroundColor: '#FFFFFF',
+                },
                 backgroundColor: '#FFFFFF',
-                image: './assets/icon-app.png',
                 dark: {
                     image: './assets/icon-app.png',
                     backgroundColor: '#000000',

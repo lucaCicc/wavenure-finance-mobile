@@ -16,7 +16,7 @@ export default StyleSheet.create({
         // elevation: 0,
     },
     androidShadowWrapper: {
-        ...StyleSheet.absoluteFillObject,
+        ...StyleSheet.absoluteFill,
         elevation: 0,
     },
     androidShadow: {

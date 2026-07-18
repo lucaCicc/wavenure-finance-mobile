@@ -40,11 +40,12 @@ const HomeScreen = () => {
         }
     }, [wallets]);
 
+    console.log('isLoadingWallets || isExpenseWallets', isLoadingWallets, isExpenseWallets);
     /**
      *
      */
     const renderContent = useMemo(() => {
-        if (isLoadingWallets || isExpenseWallets) {
+        if (isLoadingWallets) {
             return <ActivityIndicator size="small" color={colors.riper} />;
         }
         if (!wallets?.length) {
@@ -80,6 +81,7 @@ const HomeScreen = () => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+        padding: 16,
         backgroundColor: colors.pampas,
     },
 });

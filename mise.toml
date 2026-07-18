@@ -1,0 +1,4 @@
+[tools]
+node = "24.7.0"
+java = "oracle-17"
+ruby = "3.2.2"
